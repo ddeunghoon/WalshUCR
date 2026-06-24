@@ -1,0 +1,22 @@
+cff-version: 1.2.0
+message: "If you use this code, please cite the associated manuscript and this repository."
+title: "WalshUCR: Walsh-structured UCR experiments for variational quantum state discrimination"
+version: "0.1.0"
+date-released: "2026-06-24"
+authors:
+  - family-names: "Choi"
+    given-names: "Seunghoon"
+  - family-names: "Kim"
+    given-names: "Jun Suk"
+  - family-names: "Ahn"
+    given-names: "Chang Wook"
+preferred-citation:
+  type: article
+  title: "Walsh-structured uniformly controlled rotations for variational quantum state discrimination"
+  authors:
+    - family-names: "Choi"
+      given-names: "Seunghoon"
+    - family-names: "Kim"
+      given-names: "Jun Suk"
+    - family-names: "Ahn"
+      given-names: "Chang Wook"

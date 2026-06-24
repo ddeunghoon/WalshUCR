@@ -1,0 +1,34 @@
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ipynb_checkpoints/
+*.egg-info/
+
+# Build and packaging artifacts
+build/
+dist/
+wheels/
+*.whl
+*.tar.gz
+
+# Experiment outputs and logs
+results/
+**/results/
+raw/
+figures/
+summaries/
+parallel_logs/
+*.csv
+*.jsonl
+*.json
+*.log
+*.out
+*.err
+*.png
+*.pdf
+
+# Local editor and OS files
+.DS_Store
+.idea/
+.vscode/

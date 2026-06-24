@@ -1,0 +1,7 @@
+include README.md
+include LICENSE
+include CITATION.cff
+include uv.lock
+include .python-version
+recursive-include experiments *.py *.sh
+recursive-include tests *.py

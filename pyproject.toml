@@ -1,0 +1,44 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "walshucr"
+version = "0.1.0"
+description = "Source-code release environment for Walsh UCR experiments."
+readme = "README.md"
+requires-python = ">=3.11"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [
+    { name = "Seunghoon Choi" },
+    { name = "Jun Suk Kim" },
+    { name = "Chang Wook Ahn" },
+]
+keywords = [
+    "quantum state discrimination",
+    "uniformly controlled rotations",
+    "Walsh basis",
+    "variational quantum algorithms",
+]
+dependencies = [
+    "cvxpy>=1.8.0",
+    "ipykernel>=6.30.1",
+    "jax==0.6.0",
+    "jaxlib==0.6.0",
+    "jupyter>=1.1.1",
+    "matplotlib>=3.10.8",
+    "optax>=0.2.6",
+    "pennylane>=0.44.0",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=9.0.3",
+]
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
