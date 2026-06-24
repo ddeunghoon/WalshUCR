@@ -1,34 +1,48 @@
-# Code Availability
+# Code Availability Scope
 
-This repository is the compact WalshUCR source-code release for the
-Weyl--Heisenberg Walsh-degree experiments in the associated manuscript,
+This repository is a source-only reproducibility artifact for the
+Weyl--Heisenberg Walsh-degree experiments associated with the manuscript
 "Walsh-structured uniformly controlled rotations for variational quantum state
 discrimination."
 
-It contains:
+The artifact is designed for readers and reviewers who want to inspect the code
+paths behind the reported Walsh-degree-1 sweep, verify the locked software
+environment, run a minimal end-to-end calculation, and regenerate dense-sweep
+outputs from source.
 
-- the `scalable_vqsd` source package;
-- the Section 5 Walsh-degree-1 sweep and aggregation scripts;
-- pinned `uv` environment metadata;
-- license and citation metadata;
-- smoke tests for release sanity checks.
+## Included
 
-It intentionally excludes:
+- `src/scalable_vqsd`: model, benchmark, trainer, and utility code.
+- `experiments/ucr_method/sec5`: Walsh-degree-1 sweep and aggregation scripts.
+- `uv.lock` and `pyproject.toml`: pinned environment metadata.
+- `tests`: lightweight release sanity checks.
+- `README.md`: reproducibility instructions and output descriptions.
+- `LICENSE` and `CITATION.cff`: reuse and citation metadata.
 
-- local virtual environments;
-- generated result directories;
-- restart checkpoint outputs;
-- generated figures and logs;
-- large local archives.
+## Excluded
 
-Suggested manuscript wording after the repository or archival DOI is assigned:
+- Generated result directories and figures.
+- Restart checkpoint outputs.
+- Local virtual environments.
+- Profiler traces and machine-local logs.
+- Large local archives.
 
-> The WalshUCR source code used for the Weyl--Heisenberg Walsh-degree experiments
-> is available at `<repository URL or DOI>`. The repository includes the pinned
-> `uv` environment, release tests, and scripts for regenerating the reported
-> Walsh-degree-1 sweep outputs. Generated result files and large machine-local
-> artifacts are not committed.
+The excluded artifacts are not needed to inspect or rerun the source workflow.
+They are omitted to keep the repository auditable and portable.
 
-If this repository is used as the code artifact for the whole manuscript, list
-any additional repositories or archived data needed for GPU-only or larger-scale
-checks in the same availability statement.
+## Boundary of This Artifact
+
+The repository covers the compact CPU/PennyLane reproduction path for the
+Weyl--Heisenberg Walsh-degree experiment. If the manuscript availability
+statement refers to additional GPU-only runs, larger `d=16` checks, or archived
+numerical result files, those artifacts should be listed separately alongside
+this source repository.
+
+For practical verification, reviewers can start with:
+
+```bash
+uv sync --frozen
+uv run pytest
+```
+
+and then run the minimal end-to-end command documented in `README.md`.
