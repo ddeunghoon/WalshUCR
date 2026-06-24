@@ -28,7 +28,7 @@ are intentionally excluded so that the repository remains source-only.
 
 The scripts in this repository are the compact CPU/PennyLane reproduction path
 for the Weyl--Heisenberg Walsh-degree experiment. Larger GPU-only checks and any
-additional archived numerical outputs should be cited separately if they are
+additional archived numerical outputs should be listed separately if they are
 needed to reproduce other manuscript tables or figures.
 
 ## Repository Layout
@@ -206,8 +206,3 @@ Because the optimization is nonconvex, the manuscript-scale settings use a fixed
 restart protocol. Small numerical differences can occur across platforms,
 linear-algebra libraries, or JAX/PennyLane execution details; the seeds and
 optimization budget are fixed to make such comparisons auditable.
-
-## Citation and License
-
-Citation metadata is provided in `CITATION.cff`. The code is released under the
-MIT License; see `LICENSE`.

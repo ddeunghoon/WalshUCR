@@ -17,7 +17,6 @@ outputs from source.
 - `uv.lock` and `pyproject.toml`: pinned environment metadata.
 - `tests`: lightweight release sanity checks.
 - `README.md`: reproducibility instructions and output descriptions.
-- `LICENSE` and `CITATION.cff`: reuse and citation metadata.
 
 ## Excluded
 
@@ -28,7 +27,7 @@ outputs from source.
 - Large local archives.
 
 The excluded artifacts are not needed to inspect or rerun the source workflow.
-They are omitted to keep the repository auditable and portable.
+They are left out to keep the repository portable.
 
 ## Boundary of This Artifact
 
