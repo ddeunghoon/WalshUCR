@@ -1,0 +1,35 @@
+{
+  "files": [
+    {
+      "bytes": 16743,
+      "path": "figures/paper/exact_haar_d8_gap_single_panel.pdf",
+      "sha256": "e0184486120d63731bf13cad09f2677a3a736b5968b7c7e5b7c8776239088041"
+    },
+    {
+      "bytes": 72177,
+      "path": "figures/paper/exact_haar_d8_gap_single_panel.png",
+      "sha256": "e92c32e5a8ab8439bffc066e16fb236add64432b7aa4721bdb6492bdb7659a98"
+    },
+    {
+      "bytes": 24784,
+      "path": "figures/paper/wh_md_sweep_gap_zoom_two_panel_no_walsh_rs_wd1_rsucr_median_only.pdf",
+      "sha256": "d6ba1e47e3869a8a5bf5e25054ac413491bded387bc178db356b60c01e505b40"
+    },
+    {
+      "bytes": 137607,
+      "path": "figures/paper/wh_md_sweep_gap_zoom_two_panel_no_walsh_rs_wd1_rsucr_median_only.png",
+      "sha256": "0be676387817c2856d33dd7461363647899ba34d0376c9d79f6ca9000bd65c21"
+    },
+    {
+      "bytes": 23917,
+      "path": "figures/paper/wh_md_walsh_degree_gap_instances_median_tableau4_k1_k5_full_compressed_opaque_lw06.pdf",
+      "sha256": "d09787b46e7be989ae8441af52718f279d17952a413a4762ba3db8ccbccec021"
+    },
+    {
+      "bytes": 316518,
+      "path": "figures/paper/wh_md_walsh_degree_gap_instances_median_tableau4_k1_k5_full_compressed_opaque_lw06.png",
+      "sha256": "d35eea98bb20409eb485ef5d44d3e6ec41f6437e7c7736a816ea1b41d63acbd0"
+    }
+  ],
+  "manifest_version": 1
+}

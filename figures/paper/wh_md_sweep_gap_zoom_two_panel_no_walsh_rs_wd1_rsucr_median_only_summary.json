@@ -1,0 +1,58 @@
+{
+  "input_csvs": {
+    "full": "/home/shc/QSD_project/WalshUCR/data/paper/fig_wh_d8_sweep/raw/wh_md_sweep_results.csv",
+    "degree1": "/home/shc/QSD_project/WalshUCR/data/paper/fig_wh_d8_sweep/raw/wh_md_walsh_degree1_results.csv",
+    "ucr_random_sparse": "/home/shc/QSD_project/WalshUCR/data/paper/fig_wh_d8_sweep/raw/random_sparse_vs_degree1_results.csv"
+  },
+  "artifacts": {
+    "png": "/home/shc/QSD_project/WalshUCR/figures/paper/wh_md_sweep_gap_zoom_two_panel_no_walsh_rs_wd1_rsucr_median_only.png",
+    "pdf": "/home/shc/QSD_project/WalshUCR/figures/paper/wh_md_sweep_gap_zoom_two_panel_no_walsh_rs_wd1_rsucr_median_only.pdf"
+  },
+  "summary_json": "/home/shc/QSD_project/WalshUCR/figures/paper/wh_md_sweep_gap_zoom_two_panel_no_walsh_rs_wd1_rsucr_median_only_summary.json",
+  "panel_a": {
+    "description": "Detail view with individual instances and median trends.",
+    "models": [
+      "full_ucr",
+      "walsh_degree_1"
+    ],
+    "yscale": "log",
+    "ylim": [
+      1e-07,
+      0.07
+    ],
+    "display_floor": 1e-07
+  },
+  "panel_b": {
+    "description": "Full-scale median plot excluding Walsh random sparse.",
+    "models": [
+      "full_ucr",
+      "walsh_degree_1",
+      "ucr_random_sparse"
+    ],
+    "zoom_box": {
+      "xlim": [
+        4.45,
+        12.55
+      ],
+      "ylim": [
+        -0.0025,
+        0.05
+      ]
+    }
+  },
+  "display": {
+    "omit_walsh_random_sparse": true,
+    "baseline_color": "tab:blue",
+    "wd1_label": "WD-1",
+    "wd1_color": "tab:orange",
+    "ucr_random_sparse_label": "RS-UCR",
+    "ucr_random_sparse_color": "tab:red",
+    "show_ucr_random_sparse_instances": false
+  },
+  "gap_display": {
+    "clip_negative_gaps_to_zero": false,
+    "mark_zero_clipped": false,
+    "zero_display_floor": null,
+    "note": "Raw gaps are used; log-scale detail panel applies only a display floor."
+  }
+}

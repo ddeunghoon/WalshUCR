@@ -28,6 +28,24 @@ parallel_logs/
 *.png
 *.pdf
 
+# Keep the compact data and figure artifacts needed for paper reproduction
+# while generated experiment outputs remain ignored by default.
+!data/
+!data/**/
+!data/**/*.toml
+!data/paper/**/*.csv
+!data/paper/**/*.json
+!data/paper/**/*.jsonl
+!data/paper/**/*.md
+!data/manifests/**/*.json
+!figures/
+!figures/**/
+!figures/*.py
+!figures/paper/*.pdf
+!figures/paper/*.png
+!figures/paper/*.json
+!experiments/**/*.toml
+
 # Local editor and OS files
 .DS_Store
 .idea/

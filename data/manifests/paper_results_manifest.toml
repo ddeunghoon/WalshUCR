@@ -1,0 +1,53 @@
+[release]
+name = "WalshUCR"
+version = "0.1.0"
+scope = "source release with experiment code, paper data, and data-driven paper figure generation"
+
+[[artifacts]]
+id = "tab:param-decomposition"
+kind = "table"
+experiment_dir = "data/prepare_paper_data.py"
+paper_data_dir = "data/paper/table_param_decomposition"
+notes = "Analytical d=8 architecture parameter-count table is included as CSV."
+
+[[artifacts]]
+id = "fig:wh"
+kind = "figure"
+experiment_dir = "experiments/sec5_numerical_experiments/fig_wh_d8_sweep"
+paper_data_dir = "data/paper/fig_wh_d8_sweep"
+notes = "Code is included for full-UCR, Walsh-parity WD-1, and RS-UCR. Compact CSV data are under data/paper/fig_wh_d8_sweep and figure files can be regenerated from those data."
+
+[[artifacts]]
+id = "fig:haar"
+kind = "figure"
+experiment_dir = "experiments/sec5_numerical_experiments/fig_haar_d8_sweep"
+paper_data_dir = "data/paper/fig_haar_d8_sweep"
+notes = "Exact Haar d=8 runner is included. Paper data are under data/paper/fig_haar_d8_sweep and figure files can be regenerated from those data."
+
+[[artifacts]]
+id = "fig:wh-sweep"
+kind = "figure"
+experiment_dir = "experiments/sec5_numerical_experiments/fig_wh_degree_sweep"
+paper_data_dir = "data/paper/fig_wh_degree_sweep"
+notes = "Walsh-degree sweep runner is included. Paper data are under data/paper/fig_wh_degree_sweep and figure files can be regenerated from those data."
+
+[[artifacts]]
+id = "tab:d16-checks"
+kind = "table"
+experiment_dir = "experiments/sec5_numerical_experiments/table_d16_checks"
+paper_data_dir = "data/paper/table_d16_checks"
+notes = "Standalone GPU-oriented runner and batch scripts are included. Compact table-ready data are under data/paper/table_d16_checks; large full GPU raw payloads remain external/local archive material."
+
+[[artifacts]]
+id = "tab:app-ensemble-grid"
+kind = "table"
+experiment_dir = "experiments"
+paper_data_dir = "data/paper/table_app_ensemble_grid"
+notes = "Experiment-grid metadata for numerical paper artifacts is included as CSV."
+
+[[artifacts]]
+id = "tab:app-rank-diagnostics"
+kind = "table"
+experiment_dir = "experiments/appendix/rank_diagnostics"
+paper_data_dir = "data/paper/appendix_rank_diagnostics"
+notes = "Rank diagnostic runner is included. d=8 Gram-rank diagnostics are under data/paper/appendix_rank_diagnostics; d=16 rank values are documented in the d=16 table summary data."

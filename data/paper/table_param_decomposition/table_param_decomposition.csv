@@ -1,0 +1,3 @@
+regime,d,M_min,M_max,n_anc,shared_system_only_params,full_ucr_angles,wd1_angles,wd2_angles,wd3_angles,rs_ucr_angles
+M<=d,8,5,8,3,455,56,15,34,49,15
+M>d,8,9,12,4,975,120,22,56,91,22

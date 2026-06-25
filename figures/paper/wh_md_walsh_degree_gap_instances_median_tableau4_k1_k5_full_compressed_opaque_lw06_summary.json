@@ -1,0 +1,118 @@
+{
+  "input_csvs": {
+    "wh_degree_sweep": "/home/shc/QSD_project/WalshUCR/data/paper/fig_wh_degree_sweep/raw/wh_md_walsh_degree_sweep_results.csv"
+  },
+  "row_count": 100,
+  "m_values": [
+    9,
+    10,
+    11,
+    12
+  ],
+  "degrees": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "instance_ids": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "numerical_floor": 3e-05,
+  "artifacts": {
+    "png": "/home/shc/QSD_project/WalshUCR/figures/paper/wh_md_walsh_degree_gap_instances_median_tableau4_k1_k5_full_compressed_opaque_lw06.png",
+    "pdf": "/home/shc/QSD_project/WalshUCR/figures/paper/wh_md_walsh_degree_gap_instances_median_tableau4_k1_k5_full_compressed_opaque_lw06.pdf"
+  },
+  "summary_json": "/home/shc/QSD_project/WalshUCR/figures/paper/wh_md_walsh_degree_gap_instances_median_tableau4_k1_k5_full_compressed_opaque_lw06_summary.json",
+  "plot_design": {
+    "description": "Data-based reconstruction of the paper WH Walsh-degree sweep: per-instance trajectories plus median curves over instances.",
+    "x_axis": "Walsh degree 1..5 plus full-UCR reference",
+    "y_axis": "log clipped optimum gap",
+    "colors": "Matplotlib Tableau first four colors for M=9,10,11,12",
+    "instance_linewidth": 0.6,
+    "median_linewidth": 2.9
+  },
+  "median_curves": [
+    {
+      "M": 9,
+      "x": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        "full-UCR"
+      ],
+      "median_gap_abs_clipped": [
+        0.007428404212784123,
+        0.0051412029200048615,
+        3e-05,
+        3e-05,
+        3e-05,
+        3e-05
+      ]
+    },
+    {
+      "M": 10,
+      "x": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        "full-UCR"
+      ],
+      "median_gap_abs_clipped": [
+        0.04179864514437648,
+        0.0010858878875064093,
+        3e-05,
+        3e-05,
+        3e-05,
+        3e-05
+      ]
+    },
+    {
+      "M": 11,
+      "x": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        "full-UCR"
+      ],
+      "median_gap_abs_clipped": [
+        0.02527468696551083,
+        0.0002905070639347418,
+        3e-05,
+        3e-05,
+        3e-05,
+        3e-05
+      ]
+    },
+    {
+      "M": 12,
+      "x": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        "full-UCR"
+      ],
+      "median_gap_abs_clipped": [
+        0.013612886956821502,
+        0.0001245641332151548,
+        3e-05,
+        3e-05,
+        3e-05,
+        3e-05
+      ]
+    }
+  ]
+}

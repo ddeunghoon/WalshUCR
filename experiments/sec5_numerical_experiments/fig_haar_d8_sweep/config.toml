@@ -1,0 +1,21 @@
+[paper]
+figure = "fig:haar"
+description = "Haar-random d=8 M-sweep"
+
+[grid]
+n_sys = [3]
+d = 8
+m_values = [5, 6, 7, 8, 9, 10, 11, 12]
+instances_per_m = 10
+m_max_nested_states = 12
+
+[training]
+num_restarts = 50
+steps = 1000
+eval_interval = 50
+learning_rate = 0.01
+threshold = 1e-6
+
+[status]
+source_release = "included"
+reason = "Exact Haar d=8 runner and canonical paper data are included."

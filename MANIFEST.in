@@ -1,5 +1,0 @@
-include README.md
-include uv.lock
-include .python-version
-recursive-include experiments *.py *.sh
-recursive-include tests *.py

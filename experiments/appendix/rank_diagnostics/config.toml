@@ -1,0 +1,34 @@
+[paper]
+table = "tab:app-rank-diagnostics"
+description = "Input-ensemble Gram-rank diagnostics"
+
+[rank]
+tolerance = 1e-10
+
+[[datasets]]
+name = "WH dense sweep"
+d = 8
+m_values = [5, 6, 7, 8]
+ensembles_checked = 40
+smallest_nonzero_gram_eigenvalue = 4.16716e-4
+
+[[datasets]]
+name = "Haar dense sweep"
+d = 8
+m_values = [5, 6, 7, 8]
+ensembles_checked = 40
+smallest_nonzero_gram_eigenvalue = 2.73256e-3
+
+[[datasets]]
+name = "WH d=16 check"
+d = 16
+m_values = [16]
+ensembles_checked = 10
+smallest_nonzero_gram_eigenvalue = 1.529390e-4
+
+[[datasets]]
+name = "Haar d=16 check"
+d = 16
+m_values = [16]
+ensembles_checked = 10
+smallest_nonzero_gram_eigenvalue = 1.747145e-5

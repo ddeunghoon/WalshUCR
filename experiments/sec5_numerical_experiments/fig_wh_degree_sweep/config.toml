@@ -1,0 +1,21 @@
+[paper]
+figure = "fig:wh-sweep"
+description = "Weyl--Heisenberg overcomplete Walsh-degree sweep"
+
+[grid]
+n_sys = [3]
+d = 8
+m_values = [9, 10, 11, 12]
+instances_per_m = 5
+
+[training]
+num_restarts = 100
+steps = 1000
+eval_interval = 50
+learning_rate = 0.01
+threshold = 1e-6
+
+[status]
+source_release = "included"
+canonical_restart_budget_needs_confirmation = false
+reason = "Walsh-degree runner and canonical i5_r100 paper data are included."

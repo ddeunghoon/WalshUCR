@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "walshucr"
 version = "0.1.0"
-description = "Reproducibility package for Walsh UCR experiments."
+description = "Reproducibility artifact for Walsh UCR experiments."
 readme = "README.md"
 requires-python = ">=3.11"
 authors = [

@@ -7,8 +7,8 @@ from pathlib import Path
 import jax
 import jax.numpy as jnp
 
-from scalable_vqsd.benchmarks import WeylBenchmark
-from scalable_vqsd.models.vqsd import WalshKLocalVQSD
+from walsh_ucr.benchmarks import ExactHaarD8Benchmark, WeylBenchmark, build_nested_haar_problem
+from walsh_ucr.models.vqsd import RandomSparseFullUcrVQSD, WalshKLocalVQSD
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -28,6 +28,36 @@ def test_walsh_model_initialization_shape() -> None:
     assert jnp.all(jnp.isfinite(theta))
 
 
+def test_random_sparse_and_exact_haar_import_paths() -> None:
+    model = RandomSparseFullUcrVQSD(
+        n_anc=1,
+        n_sys=2,
+        selected_ucr_indices=((0, 3),),
+        su_depth=1,
+    )
+    theta = model.layout.init_params(jax.random.PRNGKey(1))
+    assert theta.shape == (model.layout.theta_dim,)
+
+    benchmark = ExactHaarD8Benchmark(max_states=2)
+    benchmark.initialize(jax.random.PRNGKey(2))
+    inputs, targets = benchmark.generate_data(jax.random.PRNGKey(3), 2)
+    assert inputs.shape == (2, 8)
+    assert jnp.array_equal(targets, jnp.arange(2, dtype=jnp.int32))
+
+    problem = build_nested_haar_problem(
+        benchmark_type="exact_haar_d8",
+        n_sys=3,
+        M=2,
+        instance_id=0,
+        master_seed=20260504,
+        nested_max_m=2,
+    )
+    assert problem["n_anc"] == 1
+    assert problem["inputs"].shape == (2, 8)
+    assert problem["states_np"].shape == (2, 8)
+    assert problem["target_states"].shape == (2,)
+
+
 def test_weyl_benchmark_data_are_deterministic() -> None:
     benchmark = WeylBenchmark(n_qubits=2, use_scrambler=True)
     benchmark.initialize(jax.random.PRNGKey(10))
@@ -42,15 +72,28 @@ def test_weyl_benchmark_data_are_deterministic() -> None:
 
 
 def test_release_cli_help() -> None:
-    script = ROOT / "experiments" / "ucr_method" / "sec5" / "wh_md_walsh_degree1_sweep.py"
-    result = subprocess.run(
-        [sys.executable, str(script), "--help"],
-        cwd=ROOT,
-        check=True,
-        text=True,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE,
-    )
+    scripts = [
+        ROOT / "experiments" / "sec5_numerical_experiments" / "fig_wh_d8_sweep" / "run.py",
+        ROOT / "experiments" / "sec5_numerical_experiments" / "fig_haar_d8_sweep" / "run.py",
+        ROOT / "experiments" / "sec5_numerical_experiments" / "fig_wh_degree_sweep" / "run.py",
+        ROOT / "experiments" / "sec5_numerical_experiments" / "table_d16_checks" / "run_gpu.py",
+        ROOT / "experiments" / "appendix" / "rank_diagnostics" / "run.py",
+        ROOT / "data" / "validate_paper_data.py",
+        ROOT / "figures" / "build_paper_figures.py",
+    ]
+    for script in scripts:
+        result = subprocess.run(
+            [sys.executable, str(script), "--help"],
+            cwd=ROOT,
+            check=True,
+            text=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+        )
+        assert "usage:" in result.stdout
 
-    assert "Walsh degree-1" in result.stdout
-    assert "--num-restarts" in result.stdout
+
+def test_readme_and_data_manifests_exist() -> None:
+    assert (ROOT / "README.md").is_file()
+    assert (ROOT / "data" / "manifests" / "paper_data_manifest.json").is_file()
+    assert (ROOT / "data" / "manifests" / "paper_results_manifest.toml").is_file()

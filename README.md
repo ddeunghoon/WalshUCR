@@ -1,54 +1,68 @@
-# WalshUCR Reproducibility Package
+# WalshUCR Reproducibility Artifact
 
-This repository provides source code for reproducing the Weyl--Heisenberg
-Walsh-degree experiments associated with the manuscript:
+This repository supports the paper:
 
 > Walsh-structured uniformly controlled rotations for variational quantum state
 > discrimination
 
-The package is organized so that readers and reviewers can check the software
-environment, run a small end-to-end calculation, and regenerate the dense
-Walsh-degree-1 sweep outputs used by the manuscript's `d=8` Weyl--Heisenberg
-comparison.
-
-## Reproducibility Scope
-
-This artifact supports:
-
-- construction of Walsh-truncated VQSD model classes;
-- deterministic Weyl--Heisenberg ensemble generation from recorded seeds;
-- SDP reference computation through CVXPY;
-- restart-based optimization for the Walsh-degree-1 model;
-- aggregation of per-instance outputs into CSV, JSON summary, and a gap plot;
-- release sanity checks through `pytest`.
-
-This artifact does not contain generated result directories, checkpoint files,
-profiler traces, local virtual environments, or large archive files. Those files
-are intentionally excluded so that the repository remains source-only.
-
-The scripts in this repository are the compact CPU/PennyLane reproduction path
-for the Weyl--Heisenberg Walsh-degree experiment. Larger GPU-only checks and any
-additional archived numerical outputs should be listed separately if they are
-needed to reproduce other manuscript tables or figures.
+WalshUCR is organized for readers and reviewers who want to inspect the code,
+validate the included numerical data, rebuild the paper figures, or rerun the
+experiments. Generated `results/` directories are ignored by git. Large restart
+logs, checkpoint payloads, profiler traces, and full GPU raw files are not
+required to rebuild the reported figures and tables and should be archived
+outside this repository if retained.
 
 ## Repository Layout
 
 ```text
-src/scalable_vqsd/
+src/walsh_ucr/
   Model, benchmark, trainer, and utility code.
 
-experiments/ucr_method/sec5/
-  Walsh-degree-1 sweep, restart-reuse runner, and parallel aggregation wrapper.
+experiments/
+  Paper experiment entry points grouped by section.
+
+experiments/sec5_numerical_experiments/fig_wh_d8_sweep/
+  Weyl--Heisenberg d=8 full-UCR, WD-1, and RS-UCR runners.
+
+experiments/sec5_numerical_experiments/fig_haar_d8_sweep/
+  Exact-Haar d=8 full-UCR, WD-1, and RS-UCR runner.
+
+experiments/sec5_numerical_experiments/fig_wh_degree_sweep/
+  Weyl--Heisenberg Walsh-degree sweep runner.
+
+experiments/sec5_numerical_experiments/table_d16_checks/
+  GPU-oriented d=16 Weyl/Haar runner, batch scripts, and table aggregator.
+
+experiments/appendix/rank_diagnostics/
+  Gram-rank diagnostic runner.
+
+data/paper/
+  Compact data files used to rebuild paper figures and tables.
+
+data/manifests/
+  Machine-readable inventories and checksums.
+
+figures/
+  Data-driven paper figure generation.
 
 tests/
-  Lightweight tests for package import, deterministic benchmark data, model
-  parameterization, and CLI availability.
+  Lightweight import, model, benchmark, and CLI checks.
 ```
 
-Key entry points:
+`data/paper/` means the data included for reproducing the paper outputs. It is
+not a Python package data directory and is not a dump of all exploratory output.
 
-- `experiments/ucr_method/sec5/wh_md_walsh_degree1_sweep.py`
-- `experiments/ucr_method/sec5/run_wh_md_walsh_degree1_nsys3_scale1_i10_r50_restart_reuse_parallel.sh`
+## Paper Output Map
+
+| Paper output | Description | Code | Data |
+|---|---|---|---|
+| Table `tab:param-decomposition` | `d=8` ansatz parameter counts | `data/prepare_paper_data.py` | `data/paper/table_param_decomposition/` |
+| Fig. `fig:wh` | Weyl--Heisenberg `d=8` M-sweep | `experiments/sec5_numerical_experiments/fig_wh_d8_sweep/` | `data/paper/fig_wh_d8_sweep/` |
+| Fig. `fig:haar` | Haar-random `d=8` M-sweep | `experiments/sec5_numerical_experiments/fig_haar_d8_sweep/` | `data/paper/fig_haar_d8_sweep/` |
+| Fig. `fig:wh-sweep` | WH overcomplete Walsh-degree sweep | `experiments/sec5_numerical_experiments/fig_wh_degree_sweep/` | `data/paper/fig_wh_degree_sweep/` |
+| Table `tab:d16-checks` | Representative `d=16` checks | `experiments/sec5_numerical_experiments/table_d16_checks/` | `data/paper/table_d16_checks/` |
+| Table `tab:app-ensemble-grid` | Dimensions, M values, and instance counts | `data/prepare_paper_data.py` | `data/paper/table_app_ensemble_grid/` |
+| Table `tab:app-rank-diagnostics` | Gram-rank diagnostics | `experiments/appendix/rank_diagnostics/` | `data/paper/appendix_rank_diagnostics/` |
 
 ## Environment
 
@@ -59,52 +73,92 @@ Required:
 
 Optional:
 
-- GNU Parallel for the sharded dense sweep wrapper.
+- CUDA-enabled JAX for paper-budget numerical reproduction. CPU execution
+  remains available for small mechanics checks.
 
-The environment is pinned by `uv.lock`. All Python commands below are written
-with `uv` so that they run in the locked environment.
-
-The release scripts default to CPU execution. A CPU-only machine is sufficient
-for the checks below. If a CUDA-capable GPU is visible but the installed JAX
-wheel is CPU-only, JAX may print a fallback warning; this does not affect the
-CPU reproducibility checks.
-
-## Install
-
-From the repository root:
+Install from the repository root:
 
 ```bash
 uv sync --frozen
 ```
 
-## Level 1: Environment and Import Checks
+All Python commands below use `uv` and the locked environment.
 
-These commands verify that the lockfile resolves, Python files compile, and the
-smoke tests pass:
+## Quick Checks
 
 ```bash
 uv lock --check
 uv sync --frozen
-uv run python -m compileall -q src experiments tests
+uv run python -m compileall -q src experiments data figures tests
 uv run pytest
 ```
 
-Expected result for the test suite:
+Expected test-suite result:
 
 ```text
-4 passed
+6 passed
 ```
 
-## Level 2: Minimal End-to-End Run
+## Data and Figures
 
-The following command runs one tiny Weyl--Heisenberg instance with one restart
-and one optimizer step. It is intended to validate the full execution path,
-including problem generation, SDP reference computation, optimization,
-checkpoint writing, aggregation, and plotting.
+Validate the included paper data exactly:
 
 ```bash
-rm -rf /tmp/walshucr_smoke
-JAX_PLATFORM_NAME=cpu uv run python experiments/ucr_method/sec5/wh_md_walsh_degree1_sweep.py \
+uv run python data/validate_paper_data.py
+```
+
+Check only that regenerated outputs have the same schema:
+
+```bash
+uv run python data/validate_paper_data.py --schema-only
+```
+
+Regenerate the numerical paper PDF/PNG figures from `data/paper`:
+
+```bash
+uv run python figures/build_paper_figures.py
+```
+
+Outputs are written under:
+
+```text
+figures/paper/
+```
+
+The data checksum and schema manifest is:
+
+```text
+data/manifests/paper_data_manifest.json
+```
+
+The paper artifact inventory is:
+
+```text
+data/manifests/paper_results_manifest.toml
+```
+
+## Preparing Included Data
+
+The committed data can be rebuilt from the local canonical result roots in the
+parent project:
+
+```bash
+uv run python data/prepare_paper_data.py --skip-d16
+```
+
+Omit `--skip-d16` only when the six full d=16 GPU result roots listed in
+`data/prepare_paper_data.py` are available locally.
+
+## Minimal End-to-End Run
+
+This tiny CPU run checks problem generation, SDP reference computation,
+optimization, checkpoint writing, aggregation, and plotting. It is not a paper
+result.
+
+```bash
+rm -rf /tmp/walshucr_fig_wh_smoke
+uv run python experiments/sec5_numerical_experiments/fig_wh_d8_sweep/run_wd1.py \
+  --jax-platform cpu \
   --n-sys-list 1 \
   --m-values 2 \
   --instance-ids 0 \
@@ -113,96 +167,85 @@ JAX_PLATFORM_NAME=cpu uv run python experiments/ucr_method/sec5/wh_md_walsh_degr
   --steps 1 \
   --eval-interval 1 \
   --su-depth 1 \
-  --output-dir /tmp/walshucr_smoke
+  --output-dir /tmp/walshucr_fig_wh_smoke
 ```
 
-Expected output files:
+Expected output files include:
 
 ```text
-/tmp/walshucr_smoke/raw/wh_md_walsh_degree1_results.csv
-/tmp/walshucr_smoke/raw/wh_md_walsh_degree1_restart_records.jsonl
-/tmp/walshucr_smoke/raw/restart_checkpoints/nsys1_M2_instance00_walsh_degree_1.jsonl
-/tmp/walshucr_smoke/figures/wh_md_walsh_degree1_gap_left_panel.png
-/tmp/walshucr_smoke/summaries/wh_md_walsh_degree1_summary.json
+/tmp/walshucr_fig_wh_smoke/raw/wh_md_walsh_degree1_results.csv
+/tmp/walshucr_fig_wh_smoke/raw/wh_md_walsh_degree1_restart_records.jsonl
+/tmp/walshucr_fig_wh_smoke/figures/wh_md_walsh_degree1_gap_left_panel.png
+/tmp/walshucr_fig_wh_smoke/summaries/wh_md_walsh_degree1_summary.json
 ```
 
-The exact optimized value is not a manuscript result for this tiny run; the run
-only checks that all code paths complete and materialize the expected artifacts.
+## Paper-Budget Runs
 
-## Level 3: Dense `d=8` Walsh-Degree-1 Sweep
+The WH `d=8` runner covers full-UCR, WD-1, and RS-UCR paths for Fig. `fig:wh`:
 
-The main script defaults to the manuscript-scale Weyl--Heisenberg
-Walsh-degree-1 grid:
+```bash
+uv run python experiments/sec5_numerical_experiments/fig_wh_d8_sweep/run.py
+```
 
-- `n_sys = 3` (`d = 8`)
+Default configuration:
+
+- `n_sys = 3`, so `d = 8`
 - `M = 5, 6, 7, 8, 9, 10, 11, 12`
 - 10 ensemble instances for each `M`
 - 50 optimization restarts for each instance
 - 1000 optimization steps per restart
 - uniform priors and the `drop_extra` projection rule
 
-Single-process execution:
+Other entry points:
 
 ```bash
-JAX_PLATFORM_NAME=cpu uv run python experiments/ucr_method/sec5/wh_md_walsh_degree1_sweep.py
+# Exact Haar d=8
+uv run python experiments/sec5_numerical_experiments/fig_haar_d8_sweep/run.py
+
+# WH Walsh-degree sweep
+uv run python experiments/sec5_numerical_experiments/fig_wh_degree_sweep/run.py
+
+# Appendix rank diagnostics
+uv run python experiments/appendix/rank_diagnostics/run.py
+
+# One d=16 GPU-runner probe
+uv run python experiments/sec5_numerical_experiments/table_d16_checks/run_gpu.py --skip-sdp
 ```
 
-This is a long-running nonconvex optimization workload. The parallel wrapper is
-the recommended path for regenerating the dense sweep because it shards over
-`M` and instance id, reuses completed shard outputs, and performs a final
-aggregation pass:
+The `d=16` paper-budget runs require a CUDA-enabled JAX installation on the
+target machine. Batch scripts are under
+`experiments/sec5_numerical_experiments/table_d16_checks/gpu/`.
+
+Compact table-ready d=16 data can be regenerated from the six full result roots
+with:
 
 ```bash
-bash experiments/ucr_method/sec5/run_wh_md_walsh_degree1_nsys3_scale1_i10_r50_restart_reuse_parallel.sh
+uv run python experiments/sec5_numerical_experiments/table_d16_checks/aggregate_table.py \
+  --input-roots <six d16 result roots> \
+  --output-dir data/paper/table_d16_checks
 ```
-
-Default output location:
-
-```text
-experiments/ucr_method/sec5/results/wh_md_walsh_degree1_nsys3_scale1_drop_extra_restart_reuse_i10_r50/
-```
-
-Final aggregate outputs are written under:
-
-```text
-.../final/raw/wh_md_walsh_degree1_results.csv
-.../final/raw/wh_md_walsh_degree1_restart_records.jsonl
-.../final/figures/wh_md_walsh_degree1_gap_left_panel.png
-.../final/summaries/wh_md_walsh_degree1_summary.json
-```
-
-Generated `results/` directories are ignored by git.
 
 ## Reduced-Budget Reviewer Run
 
-To inspect the dense-sweep workflow without running the full optimization
-budget, override the grid and restart count:
-
 ```bash
-M_LIST="5 6" INSTANCE_IDS="0 1" NUM_RESTARTS=2 STEPS=50 \
-bash experiments/ucr_method/sec5/run_wh_md_walsh_degree1_nsys3_scale1_i10_r50_restart_reuse_parallel.sh
+uv run python experiments/sec5_numerical_experiments/fig_wh_d8_sweep/run.py \
+  --models walsh_degree_1 \
+  --m-values 5 6 \
+  --instance-ids 0 1 \
+  --num-restarts 2 \
+  --steps 50
 ```
 
-This reduced-budget run is useful for reviewing the mechanics of sharding,
-checkpointing, aggregation, and output formats. It is not expected to reproduce
-the manuscript numerical values.
+This reduced run is for checking checkpoint reuse, aggregation, and output
+formats. It is not expected to reproduce paper numerical values.
 
-## Output Interpretation
+## Availability Statement Draft
 
-The main CSV contains one row per ensemble instance. Important fields include:
-
-- `n_sys`, `d`, `M`, and `instance_id`;
-- deterministic `benchmark_seed` and `data_seed`;
-- `p_opt`, the SDP reference success probability;
-- `p_succ_walsh_deg1`, the best terminal success probability over restarts;
-- `gap_abs_walsh_deg1 = p_opt - p_succ_walsh_deg1`;
-- restart metadata such as `best_restart_walsh_deg1`, `seed_opt_walsh_deg1`,
-  `num_steps_walsh_deg1`, and `termination_reason_walsh_deg1`.
-
-The summary JSON records the run configuration, aggregate statistics grouped by
-`(n_sys, M)`, and paths to generated artifacts.
-
-Because the optimization is nonconvex, the manuscript-scale settings use a fixed
-restart protocol. Small numerical differences can occur across platforms,
-linear-algebra libraries, or JAX/PennyLane execution details; the seeds and
-optimization budget are fixed to make such comparisons auditable.
+```text
+The code and numerical data supporting the figures and tables in this work are
+available in the WalshUCR repository at [URL] and archived at [DOI]. The
+repository includes the locked uv environment, scripts for regenerating reported
+figures and tables, compact data files, and metadata identifying random seeds
+and restart protocols. Large raw checkpoint files and profiler traces are not
+required to reproduce the reported results and are not included.
+```

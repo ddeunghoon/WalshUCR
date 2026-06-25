@@ -1,0 +1,6 @@
+dataset,section,figure_or_table,ensemble_family,d,n_sys,M_values,instances_per_M,models,restarts_per_instance,steps,paper_data_dir
+WH dense sweep,sec:exp-d8-sweeps,fig:wh,Weyl--Heisenberg,8,3,"5,6,7,8,9,10,11,12",10,full-UCR;WD-1;RS-UCR,50,1000,data/paper/fig_wh_d8_sweep
+Haar dense sweep,sec:exp-d8-sweeps,fig:haar,Haar-random,8,3,"5,6,7,8,9,10,11,12",10,full-UCR;WD-1;RS-UCR,50,1000,data/paper/fig_haar_d8_sweep
+WH Walsh-degree sweep,sec:exp-degree,fig:wh-sweep,Weyl--Heisenberg,8,3,"9,10,11,12",5,WD-1;WD-2;WD-3;WD-4;WD-5,100,1000,data/paper/fig_wh_degree_sweep
+WH d=16 checks,sec:exp-d16,tab:d16-checks,Weyl--Heisenberg,16,4,"16,17,20",10,"full-UCR;WD-1 for M=16;WD-4 for M=17,20",5,1000,data/paper/table_d16_checks
+Haar d=16 checks,sec:exp-d16,tab:d16-checks,Haar-random,16,4,"16,17,20",10,"full-UCR;WD-1 for M=16;WD-4 for M=17,20",5,1000,data/paper/table_d16_checks

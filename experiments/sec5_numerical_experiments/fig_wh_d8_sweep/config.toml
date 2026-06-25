@@ -1,0 +1,25 @@
+[paper]
+figure = "fig:wh"
+description = "Weyl--Heisenberg d=8 M-sweep"
+
+[grid]
+n_sys = [3]
+m_values = [5, 6, 7, 8, 9, 10, 11, 12]
+instance_ids = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+[training]
+num_restarts = 50
+steps = 1000
+eval_interval = 50
+learning_rate = 0.01
+threshold = 1e-6
+su_depth = 14
+
+[available_models]
+full_ucr = "runnable through run.py"
+walsh_degree_1 = "runnable through run.py and run_wd1.py"
+rs_ucr = "runnable through run.py after the full-UCR reference CSV exists"
+
+[status]
+source_release = "included"
+reason = "Runner and canonical paper data are included; figures can be regenerated from data/paper/fig_wh_d8_sweep."

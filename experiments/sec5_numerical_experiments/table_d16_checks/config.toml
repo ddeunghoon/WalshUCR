@@ -1,0 +1,27 @@
+[paper]
+table = "tab:d16-checks"
+description = "Representative d=16 checks"
+
+[grid]
+n_sys = [4]
+d = 16
+m_values = [16, 17, 20]
+ensemble_families = ["weyl_heisenberg", "haar_random"]
+instances_per_m = 10
+
+[training]
+num_restarts = 5
+steps = 1000
+eval_interval = 50
+learning_rate = 0.01
+threshold = 1e-6
+su_depth = 61
+
+[models_by_m]
+M16 = ["full_ucr", "walsh_degree_1"]
+M17 = ["full_ucr", "walsh_degree_4"]
+M20 = ["full_ucr", "walsh_degree_4"]
+
+[status]
+source_release = "included"
+reason = "GPU d=16 runner, batch scripts, table aggregator, and compact paper table data are included."
