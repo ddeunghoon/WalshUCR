@@ -239,13 +239,6 @@ uv run python experiments/sec5_numerical_experiments/fig_wh_d8_sweep/run.py \
 This reduced run is for checking checkpoint reuse, aggregation, and output
 formats. It is not expected to reproduce paper numerical values.
 
-## Availability Statement Draft
+## License
 
-```text
-The code and numerical data supporting the figures and tables in this work are
-available in the WalshUCR repository at [URL] and archived at [DOI]. The
-repository includes the locked uv environment, scripts for regenerating reported
-figures and tables, compact data files, and metadata identifying random seeds
-and restart protocols. Large raw checkpoint files and profiler traces are not
-required to reproduce the reported results and are not included.
-```
+This repository is released under the MIT License. See `LICENSE`.
